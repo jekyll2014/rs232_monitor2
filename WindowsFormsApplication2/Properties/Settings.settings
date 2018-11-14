@@ -6,10 +6,10 @@
       <Value Profile="(Default)">866</Value>
     </Setting>
     <Setting Name="TXTlogFile" Type="System.String" Scope="User">
-      <Value Profile="(Default)">terminal.txt</Value>
+      <Value Profile="(Default)">datalog.txt</Value>
     </Setting>
     <Setting Name="CSVlogFile" Type="System.String" Scope="User">
-      <Value Profile="(Default)">terminal.csv</Value>
+      <Value Profile="(Default)">datalog.csv</Value>
     </Setting>
     <Setting Name="DefaultCommand" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

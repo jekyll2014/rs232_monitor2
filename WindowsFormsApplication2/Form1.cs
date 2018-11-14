@@ -24,6 +24,7 @@ namespace RS232_monitor
         private int LineBreakTimeout = 100;
         private int CSVLineNumberLimit = 0;
         private string CSVFileName = "";
+        private string TXTFileName = "";
         private int CSVLineCount = 0;
         private int LogLinesLimit = 100;
         private int LineLengthLimit = 200;
@@ -144,7 +145,8 @@ namespace RS232_monitor
             autoscrollToolStripMenuItem.Checked = RS232_monitor2.Properties.Settings.Default.AutoScroll;
             lineWrapToolStripMenuItem.Checked = RS232_monitor2.Properties.Settings.Default.LineWrap;
             autosaveTXTToolStripMenuItem1.Checked = RS232_monitor2.Properties.Settings.Default.AutoLogTXT;
-            terminaltxtToolStripMenuItem1.Text = RS232_monitor2.Properties.Settings.Default.TXTlogFile;
+            TxtNameTxtToolStripMenuItem1.Text = RS232_monitor2.Properties.Settings.Default.TXTlogFile;
+            CsvNameTxtToolStripMenuItem1.Text = RS232_monitor2.Properties.Settings.Default.CSVlogFile;
             autosaveCSVToolStripMenuItem1.Checked = RS232_monitor2.Properties.Settings.Default.AutoLogCSV;
             LineBreakToolStripTextBox1.Text = RS232_monitor2.Properties.Settings.Default.LineBreakTimeout.ToString();
             LineBreakTimeout = RS232_monitor2.Properties.Settings.Default.LineBreakTimeout;
@@ -152,7 +154,7 @@ namespace RS232_monitor
             toolStripTextBox_CSVLinesNumber.Text = CSVLineNumberLimit.ToString();
             LogLinesLimit = RS232_monitor2.Properties.Settings.Default.LogLinesLimit;
             LineLengthLimit = RS232_monitor2.Properties.Settings.Default.LineLengthLimit;
-            terminaltxtToolStripMenuItem1.Enabled = autosaveTXTToolStripMenuItem1.Checked;
+            TxtNameTxtToolStripMenuItem1.Enabled = autosaveTXTToolStripMenuItem1.Checked;
 
             //set the codepage to COM-port
             serialPort1.Encoding = Encoding.GetEncoding(RS232_monitor2.Properties.Settings.Default.CodePage);
@@ -188,9 +190,11 @@ namespace RS232_monitor
             checkBox_RTS2.Checked = false;
             checkBox_RTS3.Checked = false;
             checkBox_RTS4.Checked = false;
-            CSVFileName = DateTime.Today.ToShortDateString() + "_" + DateTime.Now.ToLongTimeString() + "_" + DateTime.Now.Millisecond.ToString("D3") + ".csv";
+            CSVFileName = CsvNameTxtToolStripMenuItem1.Text + DateTime.Today.ToShortDateString() + "_" + DateTime.Now.ToLongTimeString() + "_" + DateTime.Now.Millisecond.ToString("D3") + ".csv";
             CSVFileName = CSVFileName.Replace(':', '-').Replace('\\', '-').Replace('/', '-');
             CSVLineCount = 0;
+            TXTFileName = TxtNameTxtToolStripMenuItem1.Text + DateTime.Today.ToShortDateString() + "_" + DateTime.Now.ToLongTimeString() + "_" + DateTime.Now.Millisecond.ToString("D3") + ".txt";
+            TXTFileName = TXTFileName.Replace(':', '-').Replace('\\', '-').Replace('/', '-');
             if (comboBox_portname1.SelectedIndex != 0)
             {
                 comboBox_portname1.Enabled = false;
@@ -1576,7 +1580,8 @@ namespace RS232_monitor
             RS232_monitor2.Properties.Settings.Default.AutoScroll = autoscrollToolStripMenuItem.Checked;
             RS232_monitor2.Properties.Settings.Default.LineWrap = lineWrapToolStripMenuItem.Checked;
             RS232_monitor2.Properties.Settings.Default.AutoLogTXT = autosaveTXTToolStripMenuItem1.Checked;
-            RS232_monitor2.Properties.Settings.Default.TXTlogFile = terminaltxtToolStripMenuItem1.Text;
+            RS232_monitor2.Properties.Settings.Default.TXTlogFile = TxtNameTxtToolStripMenuItem1.Text;
+            RS232_monitor2.Properties.Settings.Default.CSVlogFile = CsvNameTxtToolStripMenuItem1.Text;
             RS232_monitor2.Properties.Settings.Default.AutoLogCSV = autosaveCSVToolStripMenuItem1.Checked;
             RS232_monitor2.Properties.Settings.Default.LineBreakTimeout = LineBreakTimeout / 10000;
             RS232_monitor2.Properties.Settings.Default.CSVMaxLineNumber = CSVLineNumberLimit;
@@ -1588,7 +1593,7 @@ namespace RS232_monitor
         private void AutosaveTXTToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             autosaveTXTToolStripMenuItem1.Checked = !autosaveTXTToolStripMenuItem1.Checked;
-            terminaltxtToolStripMenuItem1.Enabled = !autosaveTXTToolStripMenuItem1.Checked;
+            TxtNameTxtToolStripMenuItem1.Enabled = !autosaveTXTToolStripMenuItem1.Checked;
         }
 
         private void LineWrapToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2047,12 +2052,12 @@ namespace RS232_monitor
                     {
                         foreach (string s in newText)
                         {
-                            File.AppendAllText(terminaltxtToolStripMenuItem1.Text, s, Encoding.GetEncoding(RS232_monitor2.Properties.Settings.Default.CodePage));
+                            File.AppendAllText(TxtNameTxtToolStripMenuItem1.Text, s, Encoding.GetEncoding(RS232_monitor2.Properties.Settings.Default.CodePage));
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("\r\nError writing file " + terminaltxtToolStripMenuItem1.Text + ": " + ex.Message);
+                        MessageBox.Show("\r\nError writing file " + TxtNameTxtToolStripMenuItem1.Text + ": " + ex.Message);
                     }
                 }
             }

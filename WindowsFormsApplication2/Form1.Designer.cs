@@ -123,7 +123,7 @@ namespace RS232_monitor
             this.autoscrollToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lineWrapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autosaveTXTToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.terminaltxtToolStripMenuItem1 = new System.Windows.Forms.ToolStripTextBox();
+            this.TxtNameTxtToolStripMenuItem1 = new System.Windows.Forms.ToolStripTextBox();
             this.autosaveCSVToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.LineTimeoutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.LineBreakToolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
@@ -187,6 +187,7 @@ namespace RS232_monitor
             this.serialPort4 = new System.IO.Ports.SerialPort(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.CsvNameTxtToolStripMenuItem1 = new System.Windows.Forms.ToolStripTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -1099,21 +1100,21 @@ namespace RS232_monitor
             // saveTXTToolStripMenuItem
             // 
             this.saveTXTToolStripMenuItem.Name = "saveTXTToolStripMenuItem";
-            this.saveTXTToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.saveTXTToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveTXTToolStripMenuItem.Text = "Save .TXT";
             this.saveTXTToolStripMenuItem.Click += new System.EventHandler(this.SaveTXTToolStripMenuItem_Click);
             // 
             // saveCSVToolStripMenuItem
             // 
             this.saveCSVToolStripMenuItem.Name = "saveCSVToolStripMenuItem";
-            this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveCSVToolStripMenuItem.Text = "Save .CSV";
             this.saveCSVToolStripMenuItem.Click += new System.EventHandler(this.SaveCSVToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -1157,7 +1158,7 @@ namespace RS232_monitor
             // 
             this.toolStripMenuItem_onlyData.Name = "toolStripMenuItem_onlyData";
             this.toolStripMenuItem_onlyData.Size = new System.Drawing.Size(200, 22);
-            this.toolStripMenuItem_onlyData.Text = "No signal log";
+            this.toolStripMenuItem_onlyData.Text = "Don\'t log signals";
             this.toolStripMenuItem_onlyData.Click += new System.EventHandler(this.ToolStripMenuItem_onlyData_Click);
             // 
             // autoscrollToolStripMenuItem
@@ -1183,26 +1184,28 @@ namespace RS232_monitor
             this.autosaveTXTToolStripMenuItem1.Checked = true;
             this.autosaveTXTToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.autosaveTXTToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.terminaltxtToolStripMenuItem1});
+            this.TxtNameTxtToolStripMenuItem1});
             this.autosaveTXTToolStripMenuItem1.Name = "autosaveTXTToolStripMenuItem1";
             this.autosaveTXTToolStripMenuItem1.Size = new System.Drawing.Size(200, 22);
-            this.autosaveTXTToolStripMenuItem1.Text = "Autosave .TXT";
+            this.autosaveTXTToolStripMenuItem1.Text = "Autosave .TXT prefix";
             this.autosaveTXTToolStripMenuItem1.Click += new System.EventHandler(this.AutosaveTXTToolStripMenuItem1_Click);
             // 
-            // terminaltxtToolStripMenuItem1
+            // TxtNameTxtToolStripMenuItem1
             // 
-            this.terminaltxtToolStripMenuItem1.Enabled = false;
-            this.terminaltxtToolStripMenuItem1.Name = "terminaltxtToolStripMenuItem1";
-            this.terminaltxtToolStripMenuItem1.Size = new System.Drawing.Size(152, 23);
-            this.terminaltxtToolStripMenuItem1.Text = "terminal.txt";
+            this.TxtNameTxtToolStripMenuItem1.Enabled = false;
+            this.TxtNameTxtToolStripMenuItem1.Name = "TxtNameTxtToolStripMenuItem1";
+            this.TxtNameTxtToolStripMenuItem1.Size = new System.Drawing.Size(152, 23);
+            this.TxtNameTxtToolStripMenuItem1.Text = "datalog";
             // 
             // autosaveCSVToolStripMenuItem1
             // 
             this.autosaveCSVToolStripMenuItem1.Checked = true;
             this.autosaveCSVToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.autosaveCSVToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CsvNameTxtToolStripMenuItem1});
             this.autosaveCSVToolStripMenuItem1.Name = "autosaveCSVToolStripMenuItem1";
             this.autosaveCSVToolStripMenuItem1.Size = new System.Drawing.Size(200, 22);
-            this.autosaveCSVToolStripMenuItem1.Text = "Autosave .CSV";
+            this.autosaveCSVToolStripMenuItem1.Text = "Autosave .CSV prefix";
             this.autosaveCSVToolStripMenuItem1.Click += new System.EventHandler(this.AutosaveCSVToolStripMenuItem1_Click);
             // 
             // LineTimeoutToolStripMenuItem1
@@ -1242,7 +1245,7 @@ namespace RS232_monitor
             this.toolStripTextBox_CSVLinesNumber});
             this.limitCSVLinesNumberToolStripMenuItem.Name = "limitCSVLinesNumberToolStripMenuItem";
             this.limitCSVLinesNumberToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.limitCSVLinesNumberToolStripMenuItem.Text = "Limit lines/CSV file";
+            this.limitCSVLinesNumberToolStripMenuItem.Text = "CSV file max. lines";
             // 
             // toolStripTextBox_CSVLinesNumber
             // 
@@ -1942,6 +1945,12 @@ namespace RS232_monitor
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
+            // CsvNameTxtToolStripMenuItem1
+            // 
+            this.CsvNameTxtToolStripMenuItem1.Name = "CsvNameTxtToolStripMenuItem1";
+            this.CsvNameTxtToolStripMenuItem1.Size = new System.Drawing.Size(100, 23);
+            this.CsvNameTxtToolStripMenuItem1.Text = "datalog";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2103,7 +2112,7 @@ namespace RS232_monitor
         private ToolStripMenuItem autosaveTXTToolStripMenuItem1;
         private ToolStripMenuItem autosaveCSVToolStripMenuItem1;
         private ToolStripMenuItem saveParametersToolStripMenuItem1;
-        private ToolStripTextBox terminaltxtToolStripMenuItem1;
+        private ToolStripTextBox TxtNameTxtToolStripMenuItem1;
         private CheckBox checkBox_suffhex;
         private Button button_refresh;
         private ToolStripMenuItem LineTimeoutToolStripMenuItem1;
@@ -2166,5 +2175,6 @@ namespace RS232_monitor
         private ToolStripStatusLabel toolStripStatusLabel1;
         private ToolStripMenuItem lineLengthToolStripMenuItem1;
         private ToolStripTextBox LineLengthToolStripTextBox1;
+        private ToolStripTextBox CsvNameTxtToolStripMenuItem1;
     }
 }
