@@ -433,7 +433,7 @@ namespace RS232_monitor2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("30000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10000")]
         public int CSVMaxLineNumber {
             get {
                 return ((int)(this["CSVMaxLineNumber"]));

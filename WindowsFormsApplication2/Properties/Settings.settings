@@ -105,7 +105,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="CSVMaxLineNumber" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">30000</Value>
+      <Value Profile="(Default)">10000</Value>
     </Setting>
     <Setting Name="LogLinesLimit" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">500</Value>

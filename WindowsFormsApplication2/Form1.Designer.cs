@@ -127,6 +127,8 @@ namespace RS232_monitor
             this.autosaveCSVToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.LineTimeoutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.LineBreakToolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.lineLengthToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.LineLengthToolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.limitCSVLinesNumberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTextBox_CSVLinesNumber = new System.Windows.Forms.ToolStripTextBox();
             this.saveParametersToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -185,8 +187,6 @@ namespace RS232_monitor
             this.serialPort4 = new System.IO.Ports.SerialPort(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lineLengthToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.LineLengthToolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -936,7 +936,7 @@ namespace RS232_monitor
             this.dataGridView.RowTemplate.ReadOnly = true;
             this.dataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridView.Size = new System.Drawing.Size(686, 110);
+            this.dataGridView.Size = new System.Drawing.Size(686, 29);
             this.dataGridView.StandardTab = true;
             this.dataGridView.TabIndex = 51;
             this.dataGridView.VirtualMode = true;
@@ -989,7 +989,7 @@ namespace RS232_monitor
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(692, 116);
+            this.tabPage2.Size = new System.Drawing.Size(692, 35);
             this.tabPage2.TabIndex = 0;
             this.tabPage2.Text = "Table";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1221,6 +1221,21 @@ namespace RS232_monitor
             this.LineBreakToolStripTextBox1.Text = "200";
             this.LineBreakToolStripTextBox1.Leave += new System.EventHandler(this.LineBreakToolStripTextBox1_Leave);
             // 
+            // lineLengthToolStripMenuItem1
+            // 
+            this.lineLengthToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LineLengthToolStripTextBox1});
+            this.lineLengthToolStripMenuItem1.Name = "lineLengthToolStripMenuItem1";
+            this.lineLengthToolStripMenuItem1.Size = new System.Drawing.Size(200, 22);
+            this.lineLengthToolStripMenuItem1.Text = "Max. line length";
+            // 
+            // LineLengthToolStripTextBox1
+            // 
+            this.LineLengthToolStripTextBox1.Name = "LineLengthToolStripTextBox1";
+            this.LineLengthToolStripTextBox1.Size = new System.Drawing.Size(100, 23);
+            this.LineLengthToolStripTextBox1.Text = "200";
+            this.LineLengthToolStripTextBox1.Leave += new System.EventHandler(this.LineLengthToolStripTextBox1_Leave);
+            // 
             // limitCSVLinesNumberToolStripMenuItem
             // 
             this.limitCSVLinesNumberToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1234,7 +1249,7 @@ namespace RS232_monitor
             this.toolStripTextBox_CSVLinesNumber.MaxLength = 5;
             this.toolStripTextBox_CSVLinesNumber.Name = "toolStripTextBox_CSVLinesNumber";
             this.toolStripTextBox_CSVLinesNumber.Size = new System.Drawing.Size(100, 23);
-            this.toolStripTextBox_CSVLinesNumber.Text = "1024";
+            this.toolStripTextBox_CSVLinesNumber.Text = "10000";
             this.toolStripTextBox_CSVLinesNumber.Leave += new System.EventHandler(this.ToolStripTextBox_CSVLinesNumber_Leave);
             // 
             // saveParametersToolStripMenuItem1
@@ -1926,21 +1941,6 @@ namespace RS232_monitor
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
-            // 
-            // lineLengthToolStripMenuItem1
-            // 
-            this.lineLengthToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.LineLengthToolStripTextBox1});
-            this.lineLengthToolStripMenuItem1.Name = "lineLengthToolStripMenuItem1";
-            this.lineLengthToolStripMenuItem1.Size = new System.Drawing.Size(200, 22);
-            this.lineLengthToolStripMenuItem1.Text = "Max. line length";
-            // 
-            // LineLengthToolStripTextBox1
-            // 
-            this.LineLengthToolStripTextBox1.Name = "LineLengthToolStripTextBox1";
-            this.LineLengthToolStripTextBox1.Size = new System.Drawing.Size(100, 23);
-            this.LineLengthToolStripTextBox1.Text = "200";
-            this.LineLengthToolStripTextBox1.Leave += new System.EventHandler(this.LineLengthToolStripTextBox1_Leave);
             // 
             // FormMain
             // 

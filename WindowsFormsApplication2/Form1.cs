@@ -1970,7 +1970,7 @@ namespace RS232_monitor
             }
 
             //put records array into the GridView
-            if (logToGridToolStripMenuItem.Checked)
+            if (logToGridToolStripMenuItem.Checked || autosaveCSVToolStripMenuItem1.Checked)
             {
                 List<DataRow> DataRowArray = new List<DataRow>();
                 foreach (Logger.LogRecord record in tmp)
@@ -1990,7 +1990,8 @@ namespace RS232_monitor
                     tempRow["Mark"] = record.mark.ToString();
                     DataRowArray.Add(tempRow);
                 }
-                SendToGridView(DataRowArray);
+
+                if (logToGridToolStripMenuItem.Checked) SendToGridView(DataRowArray);
                 //save record to CSV if needed
                 if (autosaveCSVToolStripMenuItem1.Checked)
                 {
@@ -1998,7 +1999,7 @@ namespace RS232_monitor
                 }
             }
 
-            if (logToTextToolStripMenuItem.Checked)
+            if (logToTextToolStripMenuItem.Checked || autosaveTXTToolStripMenuItem1.Checked)
             {
                 //make string array for textbox
                 List<string> newText = new List<string>();
@@ -2037,7 +2038,7 @@ namespace RS232_monitor
                 }
 
                 //put string array into the TextBox
-                SendToTextBox(newText.ToArray());
+                if (logToTextToolStripMenuItem.Checked) SendToTextBox(newText.ToArray());
 
                 //save string array to TXT if needed
                 if (autosaveTXTToolStripMenuItem1.Checked)
@@ -2061,6 +2062,12 @@ namespace RS232_monitor
         //send new text to GridView caring the string number limit
         public void SendToGridView(List<DataRow> tmpDataRow)
         {
+            this.Invoke((MethodInvoker)delegate
+            {
+                dataGridView.SuspendLayout();
+                dataGridView.Enabled = false;
+            });
+
             while (CSVdataTable.Rows.Count > 0 &&
                 CSVdataTable.Rows.Count + tmpDataRow.Count > LogLinesLimit)
             {
@@ -2070,6 +2077,12 @@ namespace RS232_monitor
             {
                 CSVdataTable.Rows.Add(r);
             }
+
+            this.Invoke((MethodInvoker)delegate
+            {
+                dataGridView.ResumeLayout();
+                dataGridView.Enabled = true;
+            });
         }
 
         //save text to CSV file caring the string number limit
