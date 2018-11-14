@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace RS232_monitor
 {
@@ -37,9 +36,7 @@ namespace RS232_monitor
             public bool mark;
         }
 
-        internal Queue<LogRecord> messageBase = new Queue<LogRecord>();
-
-        //public Queue<logRecord> Logs { get { return messageBase; } }
+        internal List<LogRecord> messageBase = new List<LogRecord>();
 
         public Logger()
         {
@@ -54,23 +51,25 @@ namespace RS232_monitor
         };
             lock (threadLock)
             {
-                messageBase = new Queue<LogRecord>();
+                messageBase = new List<LogRecord>();
             }
         }
 
-        public void Add(string portName, DirectionType signal, DateTime time, byte[] byteArray,string signalPin, bool mark)
+        public void Add(string _portName, DirectionType _direction, DateTime _time, byte[] _byteArray, string _signalPin, bool _mark)
         {
+            if (_byteArray == null) _byteArray = new byte[0];
             LogRecord tmp = new LogRecord
             {
-                dateTime = time,
-                portName = portName,
-                direction = signal,
-                message = byteArray,
-                mark = mark
+                dateTime = _time,
+                portName = _portName,
+                direction = _direction,
+                message = _byteArray,
+                signalPin = _signalPin,
+                mark = _mark
             };
             lock (threadLock)
             {
-                messageBase.Enqueue(tmp);
+                messageBase.Add(tmp);
             }
         }
 
@@ -78,7 +77,7 @@ namespace RS232_monitor
         {
             lock (threadLock)
             {
-                messageBase = new Queue<LogRecord>();
+                messageBase = new List<LogRecord>();
             }
         }
 
@@ -86,15 +85,17 @@ namespace RS232_monitor
         {
             lock (threadLock)
             {
-                return messageBase.Count;
+                return messageBase.Count();
             }
         }
 
-        public LogRecord GetNext()
+        public List<LogRecord> GetLog()
         {
             lock (threadLock)
             {
-                return messageBase.Dequeue();
+                List<LogRecord> tmp = messageBase.ToList();
+                messageBase.Clear();
+                return tmp;
             }
         }
 

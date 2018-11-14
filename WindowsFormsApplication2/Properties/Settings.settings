@@ -86,7 +86,7 @@
     <Setting Name="Codepages_list" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://msdn.microsoft.com/en-us/library/system.text.encoding(v=vs.110).aspx</Value>
     </Setting>
-    <Setting Name="LineBreakTimeout" Type="System.Int64" Scope="User">
+    <Setting Name="LineBreakTimeout" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">200</Value>
     </Setting>
     <Setting Name="Port3Name" Type="System.String" Scope="User">
@@ -108,10 +108,10 @@
       <Value Profile="(Default)">30000</Value>
     </Setting>
     <Setting Name="LogLinesLimit" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">100</Value>
-    </Setting>
-    <Setting Name="GUIRefreshPeriod" Type="System.Int64" Scope="User">
       <Value Profile="(Default)">500</Value>
+    </Setting>
+    <Setting Name="GUIRefreshPeriod" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000</Value>
     </Setting>
     <Setting Name="LineLengthLimit" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">200</Value>

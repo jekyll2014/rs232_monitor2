@@ -125,7 +125,7 @@ namespace RS232_monitor
             this.autosaveTXTToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.terminaltxtToolStripMenuItem1 = new System.Windows.Forms.ToolStripTextBox();
             this.autosaveCSVToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.LineBreakToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.LineTimeoutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.LineBreakToolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.limitCSVLinesNumberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTextBox_CSVLinesNumber = new System.Windows.Forms.ToolStripTextBox();
@@ -183,6 +183,10 @@ namespace RS232_monitor
             this.checkBox_displayPort4hex = new System.Windows.Forms.CheckBox();
             this.serialPort3 = new System.IO.Ports.SerialPort(this.components);
             this.serialPort4 = new System.IO.Ports.SerialPort(this.components);
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lineLengthToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.LineLengthToolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -193,6 +197,7 @@ namespace RS232_monitor
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox_terminal
@@ -207,7 +212,7 @@ namespace RS232_monitor
             this.textBox_terminal.Name = "textBox_terminal";
             this.textBox_terminal.ReadOnly = true;
             this.textBox_terminal.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox_terminal.Size = new System.Drawing.Size(686, 108);
+            this.textBox_terminal.Size = new System.Drawing.Size(686, 29);
             this.textBox_terminal.TabIndex = 50;
             // 
             // button_send
@@ -357,7 +362,7 @@ namespace RS232_monitor
             // button_openport
             // 
             this.button_openport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button_openport.Location = new System.Drawing.Point(642, 494);
+            this.button_openport.Location = new System.Drawing.Point(642, 415);
             this.button_openport.Name = "button_openport";
             this.button_openport.Size = new System.Drawing.Size(70, 25);
             this.button_openport.TabIndex = 14;
@@ -369,7 +374,7 @@ namespace RS232_monitor
             // 
             this.button_closeport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button_closeport.Enabled = false;
-            this.button_closeport.Location = new System.Drawing.Point(642, 525);
+            this.button_closeport.Location = new System.Drawing.Point(642, 446);
             this.button_closeport.Name = "button_closeport";
             this.button_closeport.Size = new System.Drawing.Size(70, 25);
             this.button_closeport.TabIndex = 34;
@@ -646,7 +651,7 @@ namespace RS232_monitor
             // button_clear1
             // 
             this.button_clear1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button_clear1.Location = new System.Drawing.Point(640, 423);
+            this.button_clear1.Location = new System.Drawing.Point(640, 344);
             this.button_clear1.Name = "button_clear1";
             this.button_clear1.Size = new System.Drawing.Size(70, 24);
             this.button_clear1.TabIndex = 30;
@@ -809,7 +814,7 @@ namespace RS232_monitor
             // 
             this.checkBox_displayPort1hex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBox_displayPort1hex.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox_displayPort1hex.Location = new System.Drawing.Point(642, 294);
+            this.checkBox_displayPort1hex.Location = new System.Drawing.Point(642, 215);
             this.checkBox_displayPort1hex.Name = "checkBox_displayPort1hex";
             this.checkBox_displayPort1hex.Size = new System.Drawing.Size(76, 17);
             this.checkBox_displayPort1hex.TabIndex = 27;
@@ -857,7 +862,7 @@ namespace RS232_monitor
             this.checkBox_displayPort2hex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBox_displayPort2hex.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.checkBox_displayPort2hex.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.checkBox_displayPort2hex.Location = new System.Drawing.Point(642, 317);
+            this.checkBox_displayPort2hex.Location = new System.Drawing.Point(642, 238);
             this.checkBox_displayPort2hex.Name = "checkBox_displayPort2hex";
             this.checkBox_displayPort2hex.Size = new System.Drawing.Size(76, 17);
             this.checkBox_displayPort2hex.TabIndex = 28;
@@ -871,7 +876,7 @@ namespace RS232_monitor
             this.label_dispHex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label_dispHex.AutoSize = true;
             this.label_dispHex.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label_dispHex.Location = new System.Drawing.Point(642, 278);
+            this.label_dispHex.Location = new System.Drawing.Point(642, 199);
             this.label_dispHex.Name = "label_dispHex";
             this.label_dispHex.Size = new System.Drawing.Size(76, 13);
             this.label_dispHex.TabIndex = 3;
@@ -931,7 +936,7 @@ namespace RS232_monitor
             this.dataGridView.RowTemplate.ReadOnly = true;
             this.dataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridView.Size = new System.Drawing.Size(686, 108);
+            this.dataGridView.Size = new System.Drawing.Size(686, 110);
             this.dataGridView.StandardTab = true;
             this.dataGridView.TabIndex = 51;
             this.dataGridView.VirtualMode = true;
@@ -942,7 +947,7 @@ namespace RS232_monitor
             this.checkBox_Mark.Appearance = System.Windows.Forms.Appearance.Button;
             this.checkBox_Mark.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.checkBox_Mark.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox_Mark.Location = new System.Drawing.Point(642, 386);
+            this.checkBox_Mark.Location = new System.Drawing.Point(642, 307);
             this.checkBox_Mark.Name = "checkBox_Mark";
             this.checkBox_Mark.Size = new System.Drawing.Size(70, 23);
             this.checkBox_Mark.TabIndex = 29;
@@ -961,7 +966,7 @@ namespace RS232_monitor
             this.tabControl1.Location = new System.Drawing.Point(12, 132);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(700, 140);
+            this.tabControl1.Size = new System.Drawing.Size(700, 61);
             this.tabControl1.TabIndex = 32;
             this.tabControl1.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.TabControl1_Selecting);
             // 
@@ -972,7 +977,7 @@ namespace RS232_monitor
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(692, 114);
+            this.tabPage1.Size = new System.Drawing.Size(692, 35);
             this.tabPage1.TabIndex = 1;
             this.tabPage1.Text = "Text";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -984,7 +989,7 @@ namespace RS232_monitor
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(692, 114);
+            this.tabPage2.Size = new System.Drawing.Size(692, 116);
             this.tabPage2.TabIndex = 0;
             this.tabPage2.Text = "Table";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1122,7 +1127,8 @@ namespace RS232_monitor
             this.lineWrapToolStripMenuItem,
             this.autosaveTXTToolStripMenuItem1,
             this.autosaveCSVToolStripMenuItem1,
-            this.LineBreakToolStripMenuItem1,
+            this.LineTimeoutToolStripMenuItem1,
+            this.lineLengthToolStripMenuItem1,
             this.limitCSVLinesNumberToolStripMenuItem,
             this.saveParametersToolStripMenuItem1});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
@@ -1199,20 +1205,20 @@ namespace RS232_monitor
             this.autosaveCSVToolStripMenuItem1.Text = "Autosave .CSV";
             this.autosaveCSVToolStripMenuItem1.Click += new System.EventHandler(this.AutosaveCSVToolStripMenuItem1_Click);
             // 
-            // LineBreakToolStripMenuItem1
+            // LineTimeoutToolStripMenuItem1
             // 
-            this.LineBreakToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LineTimeoutToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.LineBreakToolStripTextBox1});
-            this.LineBreakToolStripMenuItem1.Name = "LineBreakToolStripMenuItem1";
-            this.LineBreakToolStripMenuItem1.Size = new System.Drawing.Size(200, 22);
-            this.LineBreakToolStripMenuItem1.Text = "Line break timeout [ms]";
+            this.LineTimeoutToolStripMenuItem1.Name = "LineTimeoutToolStripMenuItem1";
+            this.LineTimeoutToolStripMenuItem1.Size = new System.Drawing.Size(200, 22);
+            this.LineTimeoutToolStripMenuItem1.Text = "Line break timeout [ms]";
             // 
             // LineBreakToolStripTextBox1
             // 
             this.LineBreakToolStripTextBox1.MaxLength = 5;
             this.LineBreakToolStripTextBox1.Name = "LineBreakToolStripTextBox1";
             this.LineBreakToolStripTextBox1.Size = new System.Drawing.Size(100, 23);
-            this.LineBreakToolStripTextBox1.Text = "1000";
+            this.LineBreakToolStripTextBox1.Text = "200";
             this.LineBreakToolStripTextBox1.Leave += new System.EventHandler(this.LineBreakToolStripTextBox1_Leave);
             // 
             // limitCSVLinesNumberToolStripMenuItem
@@ -1260,7 +1266,7 @@ namespace RS232_monitor
             // button_refresh
             // 
             this.button_refresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button_refresh.Location = new System.Drawing.Point(642, 465);
+            this.button_refresh.Location = new System.Drawing.Point(642, 386);
             this.button_refresh.Name = "button_refresh";
             this.button_refresh.Size = new System.Drawing.Size(70, 23);
             this.button_refresh.TabIndex = 33;
@@ -1291,7 +1297,7 @@ namespace RS232_monitor
             this.groupBox2.Controls.Add(this.checkBox_DSR1);
             this.groupBox2.Controls.Add(this.checkBox_RTS1);
             this.groupBox2.Controls.Add(this.checkBox_DTR1);
-            this.groupBox2.Location = new System.Drawing.Point(12, 278);
+            this.groupBox2.Location = new System.Drawing.Point(12, 199);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(309, 133);
             this.groupBox2.TabIndex = 61;
@@ -1321,7 +1327,7 @@ namespace RS232_monitor
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Controls.Add(this.checkBox_DSR2);
             this.groupBox3.Controls.Add(this.label15);
-            this.groupBox3.Location = new System.Drawing.Point(327, 278);
+            this.groupBox3.Location = new System.Drawing.Point(327, 199);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(309, 133);
             this.groupBox3.TabIndex = 62;
@@ -1351,7 +1357,7 @@ namespace RS232_monitor
             this.groupBox4.Controls.Add(this.label22);
             this.groupBox4.Controls.Add(this.checkBox_DSR3);
             this.groupBox4.Controls.Add(this.label23);
-            this.groupBox4.Location = new System.Drawing.Point(12, 417);
+            this.groupBox4.Location = new System.Drawing.Point(12, 338);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(309, 133);
             this.groupBox4.TabIndex = 63;
@@ -1608,7 +1614,7 @@ namespace RS232_monitor
             this.groupBox5.Controls.Add(this.label29);
             this.groupBox5.Controls.Add(this.checkBox_DSR4);
             this.groupBox5.Controls.Add(this.label30);
-            this.groupBox5.Location = new System.Drawing.Point(327, 417);
+            this.groupBox5.Location = new System.Drawing.Point(327, 338);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(309, 133);
             this.groupBox5.TabIndex = 64;
@@ -1874,7 +1880,7 @@ namespace RS232_monitor
             // 
             this.checkBox_displayPort3hex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBox_displayPort3hex.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox_displayPort3hex.Location = new System.Drawing.Point(642, 340);
+            this.checkBox_displayPort3hex.Location = new System.Drawing.Point(642, 261);
             this.checkBox_displayPort3hex.Name = "checkBox_displayPort3hex";
             this.checkBox_displayPort3hex.Size = new System.Drawing.Size(76, 17);
             this.checkBox_displayPort3hex.TabIndex = 27;
@@ -1888,7 +1894,7 @@ namespace RS232_monitor
             this.checkBox_displayPort4hex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBox_displayPort4hex.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.checkBox_displayPort4hex.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.checkBox_displayPort4hex.Location = new System.Drawing.Point(642, 363);
+            this.checkBox_displayPort4hex.Location = new System.Drawing.Point(642, 284);
             this.checkBox_displayPort4hex.Name = "checkBox_displayPort4hex";
             this.checkBox_displayPort4hex.Size = new System.Drawing.Size(76, 17);
             this.checkBox_displayPort4hex.TabIndex = 28;
@@ -1905,11 +1911,43 @@ namespace RS232_monitor
             // 
             this.serialPort4.ErrorReceived += new System.IO.Ports.SerialErrorReceivedEventHandler(this.SerialPort_ErrorReceived);
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 480);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(724, 22);
+            this.statusStrip1.TabIndex = 65;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            // 
+            // lineLengthToolStripMenuItem1
+            // 
+            this.lineLengthToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LineLengthToolStripTextBox1});
+            this.lineLengthToolStripMenuItem1.Name = "lineLengthToolStripMenuItem1";
+            this.lineLengthToolStripMenuItem1.Size = new System.Drawing.Size(200, 22);
+            this.lineLengthToolStripMenuItem1.Text = "Max. line length";
+            // 
+            // LineLengthToolStripTextBox1
+            // 
+            this.LineLengthToolStripTextBox1.Name = "LineLengthToolStripTextBox1";
+            this.LineLengthToolStripTextBox1.Size = new System.Drawing.Size(100, 23);
+            this.LineLengthToolStripTextBox1.Text = "200";
+            this.LineLengthToolStripTextBox1.Leave += new System.EventHandler(this.LineLengthToolStripTextBox1_Leave);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(724, 562);
+            this.ClientSize = new System.Drawing.Size(724, 502);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.checkBox_sendPort4);
             this.Controls.Add(this.checkBox_sendPort3);
             this.Controls.Add(this.checkBox_sendPort2);
@@ -1946,7 +1984,7 @@ namespace RS232_monitor
             this.Controls.Add(this.textBox_senddata);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
-            this.MinimumSize = new System.Drawing.Size(740, 510);
+            this.MinimumSize = new System.Drawing.Size(740, 540);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RS232 monitor";
@@ -1968,6 +2006,8 @@ namespace RS232_monitor
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2066,7 +2106,7 @@ namespace RS232_monitor
         private ToolStripTextBox terminaltxtToolStripMenuItem1;
         private CheckBox checkBox_suffhex;
         private Button button_refresh;
-        private ToolStripMenuItem LineBreakToolStripMenuItem1;
+        private ToolStripMenuItem LineTimeoutToolStripMenuItem1;
         private ToolStripTextBox LineBreakToolStripTextBox1;
         private GroupBox groupBox2;
         private GroupBox groupBox3;
@@ -2122,5 +2162,9 @@ namespace RS232_monitor
         private ToolStripMenuItem toolStripMenuItem_onlyData;
         private ToolStripMenuItem limitCSVLinesNumberToolStripMenuItem;
         private ToolStripTextBox toolStripTextBox_CSVLinesNumber;
+        private StatusStrip statusStrip1;
+        private ToolStripStatusLabel toolStripStatusLabel1;
+        private ToolStripMenuItem lineLengthToolStripMenuItem1;
+        private ToolStripTextBox LineLengthToolStripTextBox1;
     }
 }
