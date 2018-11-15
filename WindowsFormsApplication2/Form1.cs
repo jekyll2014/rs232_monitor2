@@ -1638,22 +1638,22 @@ namespace RS232_monitor
                 e.Cancel = true;
         }
 
-        private void checkBox_displayPort1hex_CheckedChanged(object sender, EventArgs e)
+        private void CheckBox_displayPort1hex_CheckedChanged(object sender, EventArgs e)
         {
             displayhex[0] = checkBox_displayPort1hex.Checked;
         }
 
-        private void checkBox_displayPort2hex_CheckedChanged(object sender, EventArgs e)
+        private void CheckBox_displayPort2hex_CheckedChanged(object sender, EventArgs e)
         {
             displayhex[1] = checkBox_displayPort2hex.Checked;
         }
 
-        private void checkBox_displayPort3hex_CheckedChanged(object sender, EventArgs e)
+        private void CheckBox_displayPort3hex_CheckedChanged(object sender, EventArgs e)
         {
             displayhex[2] = checkBox_displayPort3hex.Checked;
         }
 
-        private void checkBox_displayPort4hex_CheckedChanged(object sender, EventArgs e)
+        private void CheckBox_displayPort4hex_CheckedChanged(object sender, EventArgs e)
         {
             displayhex[3] = checkBox_displayPort4hex.Checked;
         }

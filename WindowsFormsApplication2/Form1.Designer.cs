@@ -36,6 +36,7 @@ namespace RS232_monitor
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.textBox_terminal = new System.Windows.Forms.TextBox();
             this.button_send = new System.Windows.Forms.Button();
             this.comboBox_portspeed1 = new System.Windows.Forms.ComboBox();
@@ -125,6 +126,7 @@ namespace RS232_monitor
             this.autosaveTXTToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.TxtNameTxtToolStripMenuItem1 = new System.Windows.Forms.ToolStripTextBox();
             this.autosaveCSVToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.CsvNameTxtToolStripMenuItem1 = new System.Windows.Forms.ToolStripTextBox();
             this.LineTimeoutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.LineBreakToolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.lineLengthToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -187,7 +189,6 @@ namespace RS232_monitor
             this.serialPort4 = new System.IO.Ports.SerialPort(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.CsvNameTxtToolStripMenuItem1 = new System.Windows.Forms.ToolStripTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -822,7 +823,7 @@ namespace RS232_monitor
             this.checkBox_displayPort1hex.Text = "Port 1";
             this.checkBox_displayPort1hex.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.checkBox_displayPort1hex.UseVisualStyleBackColor = true;
-            this.checkBox_displayPort1hex.CheckedChanged += new System.EventHandler(this.checkBox_displayPort1hex_CheckedChanged);
+            this.checkBox_displayPort1hex.CheckedChanged += new System.EventHandler(this.CheckBox_displayPort1hex_CheckedChanged);
             // 
             // saveFileDialog
             // 
@@ -870,7 +871,7 @@ namespace RS232_monitor
             this.checkBox_displayPort2hex.Text = "Port 2";
             this.checkBox_displayPort2hex.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.checkBox_displayPort2hex.UseVisualStyleBackColor = true;
-            this.checkBox_displayPort2hex.CheckedChanged += new System.EventHandler(this.checkBox_displayPort2hex_CheckedChanged);
+            this.checkBox_displayPort2hex.CheckedChanged += new System.EventHandler(this.CheckBox_displayPort2hex_CheckedChanged);
             // 
             // label_dispHex
             // 
@@ -1100,21 +1101,21 @@ namespace RS232_monitor
             // saveTXTToolStripMenuItem
             // 
             this.saveTXTToolStripMenuItem.Name = "saveTXTToolStripMenuItem";
-            this.saveTXTToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveTXTToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
             this.saveTXTToolStripMenuItem.Text = "Save .TXT";
             this.saveTXTToolStripMenuItem.Click += new System.EventHandler(this.SaveTXTToolStripMenuItem_Click);
             // 
             // saveCSVToolStripMenuItem
             // 
             this.saveCSVToolStripMenuItem.Name = "saveCSVToolStripMenuItem";
-            this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
             this.saveCSVToolStripMenuItem.Text = "Save .CSV";
             this.saveCSVToolStripMenuItem.Click += new System.EventHandler(this.SaveCSVToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -1207,6 +1208,12 @@ namespace RS232_monitor
             this.autosaveCSVToolStripMenuItem1.Size = new System.Drawing.Size(200, 22);
             this.autosaveCSVToolStripMenuItem1.Text = "Autosave .CSV prefix";
             this.autosaveCSVToolStripMenuItem1.Click += new System.EventHandler(this.AutosaveCSVToolStripMenuItem1_Click);
+            // 
+            // CsvNameTxtToolStripMenuItem1
+            // 
+            this.CsvNameTxtToolStripMenuItem1.Name = "CsvNameTxtToolStripMenuItem1";
+            this.CsvNameTxtToolStripMenuItem1.Size = new System.Drawing.Size(100, 23);
+            this.CsvNameTxtToolStripMenuItem1.Text = "datalog";
             // 
             // LineTimeoutToolStripMenuItem1
             // 
@@ -1905,7 +1912,7 @@ namespace RS232_monitor
             this.checkBox_displayPort3hex.Text = "Port 3";
             this.checkBox_displayPort3hex.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.checkBox_displayPort3hex.UseVisualStyleBackColor = true;
-            this.checkBox_displayPort3hex.CheckedChanged += new System.EventHandler(this.checkBox_displayPort3hex_CheckedChanged);
+            this.checkBox_displayPort3hex.CheckedChanged += new System.EventHandler(this.CheckBox_displayPort3hex_CheckedChanged);
             // 
             // checkBox_displayPort4hex
             // 
@@ -1919,7 +1926,7 @@ namespace RS232_monitor
             this.checkBox_displayPort4hex.Text = "Port 4";
             this.checkBox_displayPort4hex.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.checkBox_displayPort4hex.UseVisualStyleBackColor = true;
-            this.checkBox_displayPort4hex.CheckedChanged += new System.EventHandler(this.checkBox_displayPort4hex_CheckedChanged);
+            this.checkBox_displayPort4hex.CheckedChanged += new System.EventHandler(this.CheckBox_displayPort4hex_CheckedChanged);
             // 
             // serialPort3
             // 
@@ -1937,19 +1944,11 @@ namespace RS232_monitor
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(724, 22);
             this.statusStrip1.TabIndex = 65;
-            this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
-            // 
-            // CsvNameTxtToolStripMenuItem1
-            // 
-            this.CsvNameTxtToolStripMenuItem1.Name = "CsvNameTxtToolStripMenuItem1";
-            this.CsvNameTxtToolStripMenuItem1.Size = new System.Drawing.Size(100, 23);
-            this.CsvNameTxtToolStripMenuItem1.Text = "datalog";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
             // 
             // FormMain
             // 
@@ -1992,11 +1991,12 @@ namespace RS232_monitor
             this.Controls.Add(this.textBox_params);
             this.Controls.Add(this.textBox_senddata);
             this.Controls.Add(this.menuStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
             this.MinimumSize = new System.Drawing.Size(740, 540);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "RS232 monitor";
+            this.Text = "RS232 monitor2";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.tabControl1.ResumeLayout(false);
