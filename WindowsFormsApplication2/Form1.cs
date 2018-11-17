@@ -1965,7 +1965,7 @@ namespace RS232_monitor
                     //move message and signalPin from i+1 to i
                     tmpTime = tmp[i + 1].dateTime;
                     Logger.LogRecord t = tmp[i];
-                    t.message = CombineByteArrays(tmp[i].message, tmp[i + 1].message);
+                    t.message = Accessory.CombineByteArrays(tmp[i].message, tmp[i + 1].message);
                     t.signalPin = tmp[i].signalPin + tmp[i + 1].signalPin;
                     tmp[i] = t;
                     tmp.RemoveAt(i + 1);
@@ -2181,14 +2181,6 @@ namespace RS232_monitor
                     textBox_terminal.ScrollToCaret();
                 }
             });
-        }
-
-        public byte[] CombineByteArrays(byte[] first, byte[] second)
-        {
-            byte[] ret = new byte[first.Length + second.Length];
-            Buffer.BlockCopy(first, 0, ret, 0, first.Length);
-            Buffer.BlockCopy(second, 0, ret, first.Length, second.Length);
-            return ret;
         }
 
     }
