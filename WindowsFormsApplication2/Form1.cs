@@ -28,9 +28,9 @@ namespace RS232_monitor
         private int CSVLineCount = 0;
         private int LogLinesLimit = 100;
         private int LineLengthLimit = 200;
+
         private Logger datalog = new Logger();
         private Thread t;
-
         public static System.Timers.Timer aTimer;
 
         #region GUI management
