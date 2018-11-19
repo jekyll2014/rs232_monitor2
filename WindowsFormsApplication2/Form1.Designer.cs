@@ -131,8 +131,12 @@ namespace RS232_monitor
             this.LineBreakToolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.lineLengthToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.LineLengthToolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.LogLinesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.LogLinesToolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.limitCSVLinesNumberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTextBox_CSVLinesNumber = new System.Windows.Forms.ToolStripTextBox();
+            this.GuiRefreshToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.GuiRefreshToolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.saveParametersToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkBox_suffhex = new System.Windows.Forms.CheckBox();
@@ -1131,7 +1135,9 @@ namespace RS232_monitor
             this.autosaveCSVToolStripMenuItem1,
             this.LineTimeoutToolStripMenuItem1,
             this.lineLengthToolStripMenuItem1,
+            this.LogLinesToolStripMenuItem1,
             this.limitCSVLinesNumberToolStripMenuItem,
+            this.GuiRefreshToolStripMenuItem1,
             this.saveParametersToolStripMenuItem1});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -1211,6 +1217,7 @@ namespace RS232_monitor
             // 
             // CsvNameTxtToolStripMenuItem1
             // 
+            this.CsvNameTxtToolStripMenuItem1.Enabled = false;
             this.CsvNameTxtToolStripMenuItem1.Name = "CsvNameTxtToolStripMenuItem1";
             this.CsvNameTxtToolStripMenuItem1.Size = new System.Drawing.Size(100, 23);
             this.CsvNameTxtToolStripMenuItem1.Text = "datalog";
@@ -1237,7 +1244,7 @@ namespace RS232_monitor
             this.LineLengthToolStripTextBox1});
             this.lineLengthToolStripMenuItem1.Name = "lineLengthToolStripMenuItem1";
             this.lineLengthToolStripMenuItem1.Size = new System.Drawing.Size(200, 22);
-            this.lineLengthToolStripMenuItem1.Text = "Max. line length";
+            this.lineLengthToolStripMenuItem1.Text = "Max. line length [byte]";
             // 
             // LineLengthToolStripTextBox1
             // 
@@ -1245,6 +1252,21 @@ namespace RS232_monitor
             this.LineLengthToolStripTextBox1.Size = new System.Drawing.Size(100, 23);
             this.LineLengthToolStripTextBox1.Text = "200";
             this.LineLengthToolStripTextBox1.Leave += new System.EventHandler(this.LineLengthToolStripTextBox1_Leave);
+            // 
+            // LogLinesToolStripMenuItem1
+            // 
+            this.LogLinesToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LogLinesToolStripTextBox1});
+            this.LogLinesToolStripMenuItem1.Name = "LogLinesToolStripMenuItem1";
+            this.LogLinesToolStripMenuItem1.Size = new System.Drawing.Size(200, 22);
+            this.LogLinesToolStripMenuItem1.Text = "Log lines limit";
+            // 
+            // LogLinesToolStripTextBox1
+            // 
+            this.LogLinesToolStripTextBox1.Name = "LogLinesToolStripTextBox1";
+            this.LogLinesToolStripTextBox1.Size = new System.Drawing.Size(100, 23);
+            this.LogLinesToolStripTextBox1.Text = "1000";
+            this.LogLinesToolStripTextBox1.Leave += new System.EventHandler(this.LogLinesToolStripTextBox1_Leave);
             // 
             // limitCSVLinesNumberToolStripMenuItem
             // 
@@ -1261,6 +1283,21 @@ namespace RS232_monitor
             this.toolStripTextBox_CSVLinesNumber.Size = new System.Drawing.Size(100, 23);
             this.toolStripTextBox_CSVLinesNumber.Text = "10000";
             this.toolStripTextBox_CSVLinesNumber.Leave += new System.EventHandler(this.ToolStripTextBox_CSVLinesNumber_Leave);
+            // 
+            // GuiRefreshToolStripMenuItem1
+            // 
+            this.GuiRefreshToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.GuiRefreshToolStripTextBox1});
+            this.GuiRefreshToolStripMenuItem1.Name = "GuiRefreshToolStripMenuItem1";
+            this.GuiRefreshToolStripMenuItem1.Size = new System.Drawing.Size(200, 22);
+            this.GuiRefreshToolStripMenuItem1.Text = "GUI refresh time [ms]";
+            // 
+            // GuiRefreshToolStripTextBox1
+            // 
+            this.GuiRefreshToolStripTextBox1.Name = "GuiRefreshToolStripTextBox1";
+            this.GuiRefreshToolStripTextBox1.Size = new System.Drawing.Size(100, 23);
+            this.GuiRefreshToolStripTextBox1.Text = "1000";
+            this.GuiRefreshToolStripTextBox1.Leave += new System.EventHandler(this.GuiRefreshToolStripTextBox1_Leave);
             // 
             // saveParametersToolStripMenuItem1
             // 
@@ -1997,6 +2034,7 @@ namespace RS232_monitor
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RS232 monitor2";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.tabControl1.ResumeLayout(false);
@@ -2176,5 +2214,9 @@ namespace RS232_monitor
         private ToolStripMenuItem lineLengthToolStripMenuItem1;
         private ToolStripTextBox LineLengthToolStripTextBox1;
         private ToolStripTextBox CsvNameTxtToolStripMenuItem1;
+        private ToolStripMenuItem LogLinesToolStripMenuItem1;
+        private ToolStripTextBox LogLinesToolStripTextBox1;
+        private ToolStripMenuItem GuiRefreshToolStripMenuItem1;
+        private ToolStripTextBox GuiRefreshToolStripTextBox1;
     }
 }
