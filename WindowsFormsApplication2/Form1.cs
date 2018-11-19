@@ -19,17 +19,21 @@ namespace RS232_monitor
         private bool o_cd4, o_dsr4, o_dtr4, o_rts4, o_cts4;
         public DataTable CSVdataTable = new DataTable("Logs");
         private List<string> portName = new List<string>();
-        private string[] altPortName = new string[4];
-        private bool[] displayhex = new bool[4] { false, false, false, false };
-        private int LineBreakTimeout = 100;
-        private int CSVLineNumberLimit = 0;
         private string CSVFileName = "";
         private string TXTFileName = "";
         private int CSVLineCount = 0;
-        private int LogLinesLimit = 100;
-        private int LineLengthLimit = 200;
+        private string[] altPortName = new string[4];
+        private bool[] displayhex = new bool[4] { false, false, false, false };
         private Logger datalog = new Logger();
         private Thread t;
+        private List<Logger.LogRecord> tmp = new List<Logger.LogRecord>();
+
+        //Global settings
+        private int LineBreakTimeout = 100;
+        private int CSVLineNumberLimit = 20000;
+        private int LogLinesLimit = 100;
+        private int LineLengthLimit = 200;
+        private int GUIRefreshPeriod = 1000;
 
         public static System.Timers.Timer aTimer;
 
@@ -1534,6 +1538,13 @@ namespace RS232_monitor
             TxtNameTxtToolStripMenuItem1.Enabled = !autosaveTXTToolStripMenuItem1.Checked;
         }
 
+        private void AutosaveCSVToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            autosaveCSVToolStripMenuItem1.Checked = !autosaveCSVToolStripMenuItem1.Checked;
+            CsvNameTxtToolStripMenuItem1.Enabled = !autosaveCSVToolStripMenuItem1.Checked;
+
+        }
+
         private void LineWrapToolStripMenuItem_Click(object sender, EventArgs e)
         {
             lineWrapToolStripMenuItem.Checked = !lineWrapToolStripMenuItem.Checked;
@@ -1625,6 +1636,26 @@ namespace RS232_monitor
             }
         }
 
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            while (t != null && t.IsAlive)
+                toolStripStatusLabel1.Text = "Waiting for buffer flush...";
+            aTimer.Enabled = false;
+        }
+
+        private void LogLinesToolStripTextBox1_Leave(object sender, EventArgs e)
+        {
+            int.TryParse(LineBreakToolStripTextBox1.Text, out LogLinesLimit);
+            LineBreakToolStripTextBox1.Text = LogLinesLimit.ToString();
+        }
+
+        private void GuiRefreshToolStripTextBox1_Leave(object sender, EventArgs e)
+        {
+            int.TryParse(LineBreakToolStripTextBox1.Text, out GUIRefreshPeriod);
+            LineBreakToolStripTextBox1.Text = GUIRefreshPeriod.ToString();
+
+        }
+
         private void CheckBox_Mark_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox_Mark.Checked == true) checkBox_Mark.Font = new Font(checkBox_Mark.Font, FontStyle.Bold);
@@ -1692,11 +1723,6 @@ namespace RS232_monitor
         {
             int.TryParse(LineBreakToolStripTextBox1.Text, out LineBreakTimeout);
             LineBreakToolStripTextBox1.Text = LineBreakTimeout.ToString();
-        }
-
-        private void AutosaveCSVToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            autosaveCSVToolStripMenuItem1.Checked = !autosaveCSVToolStripMenuItem1.Checked;
         }
 
         #endregion
@@ -1888,40 +1914,42 @@ namespace RS232_monitor
             });
 
 
-            List<Logger.LogRecord> tmp = new List<Logger.LogRecord>();
             tmp.AddRange(datalog.GetLog());
 
             //sort list of records by time just in case
             //tmp.Sort((x, y) => x.dateTime.CompareTo(y.dateTime));
 
             //combine/split data based on "LineBreakTimeout" and "LineLengthLimit"
-
-            DateTime tmpTime = tmp[0].dateTime;
-            for (int i = 0; i < tmp.Count - 1; i++)
+            if (tmp.Count > 1)
             {
-                if (tmp[i].portName == tmp[i + 1].portName &&
-                    tmp[i].direction == tmp[i + 1].direction &&
-                    (tmp[i].message.Length + tmp[i + 1].message.Length) <= LineLengthLimit &&
-                    tmp[i + 1].dateTime.Subtract(tmpTime).Milliseconds <= LineBreakTimeout)
+                DateTime tmpTime = tmp[0].dateTime;
+                for (int i = 0; i < tmp.Count - 1; i++)
                 {
-                    //move message and signalPin from i+1 to i
-                    tmpTime = tmp[i + 1].dateTime;
-                    Logger.LogRecord t = tmp[i];
-                    t.message = Accessory.CombineByteArrays(tmp[i].message, tmp[i + 1].message);
-                    t.signalPin = tmp[i].signalPin + tmp[i + 1].signalPin;
-                    tmp[i] = t;
-                    tmp.RemoveAt(i + 1);
-                    i--;
+                    if (tmp[i].portName == tmp[i + 1].portName &&
+                        tmp[i].direction == tmp[i + 1].direction &&
+                        (tmp[i].message.Length + tmp[i + 1].message.Length) <= LineLengthLimit &&
+                        tmp[i + 1].dateTime.Subtract(tmpTime).Milliseconds <= LineBreakTimeout)
+                    {
+                        //move message and signalPin from i+1 to i
+                        tmpTime = tmp[i + 1].dateTime;
+                        Logger.LogRecord t = tmp[i];
+                        t.message = Accessory.CombineByteArrays(tmp[i].message, tmp[i + 1].message);
+                        t.signalPin = tmp[i].signalPin + tmp[i + 1].signalPin;
+                        tmp[i] = t;
+                        tmp.RemoveAt(i + 1);
+                        i--;
+                    }
+                    else tmpTime = tmp[i + 1].dateTime;
                 }
-                else tmpTime = tmp[i + 1].dateTime;
             }
 
-            //put records array into the GridView
-            if (logToGridToolStripMenuItem.Checked || autosaveCSVToolStripMenuItem1.Checked)
+            while (tmp.Count > 1 || (tmp.Count == 1 && DateTime.Now.Subtract(tmp[0].dateTime).Milliseconds > LineBreakTimeout))
             {
-                List<DataRow> DataRowArray = new List<DataRow>();
-                foreach (Logger.LogRecord record in tmp)
+                //put records array into the GridView
+                if (logToGridToolStripMenuItem.Checked || autosaveCSVToolStripMenuItem1.Checked)
                 {
+                    List<DataRow> DataRowArray = new List<DataRow>();
+                    Logger.LogRecord record = tmp[0];
                     //get number of port from portname
                     int portnum = portName.IndexOf(record.portName);
                     //make record for DataTable
@@ -1936,22 +1964,20 @@ namespace RS232_monitor
                     tempRow["Signal"] = record.signalPin;
                     tempRow["Mark"] = record.mark.ToString();
                     DataRowArray.Add(tempRow);
+
+                    if (logToGridToolStripMenuItem.Checked) SendToGridView(DataRowArray);
+                    //save record to CSV if needed
+                    if (autosaveCSVToolStripMenuItem1.Checked)
+                    {
+                        CSVcollectBuffer(DataRowArray);
+                    }
                 }
 
-                if (logToGridToolStripMenuItem.Checked) SendToGridView(DataRowArray);
-                //save record to CSV if needed
-                if (autosaveCSVToolStripMenuItem1.Checked)
+                if (logToTextToolStripMenuItem.Checked || autosaveTXTToolStripMenuItem1.Checked)
                 {
-                    CSVcollectBuffer(DataRowArray);
-                }
-            }
-
-            if (logToTextToolStripMenuItem.Checked || autosaveTXTToolStripMenuItem1.Checked)
-            {
-                //make string array for textbox
-                List<string> newText = new List<string>();
-                foreach (Logger.LogRecord record in tmp)
-                {
+                    //make string array for textbox
+                    List<string> newText = new List<string>();
+                    Logger.LogRecord record = tmp[0];
                     //get number of port from portname
                     int portnum = portName.IndexOf(record.portName);
                     //create text strings
@@ -1966,7 +1992,7 @@ namespace RS232_monitor
                     }
 
                     //port
-                    if (checkBox_portName.Checked) tmpBuffer += altPortName[portnum];
+                    if (checkBox_portName.Checked) tmpBuffer += altPortName[portnum] + " ";
                     else tmpBuffer += record.portName;
 
                     //dir
@@ -1982,26 +2008,27 @@ namespace RS232_monitor
                     //skip "mark" field in the text
                     tmpBuffer += "\r\n";
                     newText.Add(tmpBuffer);
-                }
 
-                //put string array into the TextBox
-                if (logToTextToolStripMenuItem.Checked) SendToTextBox(newText.ToArray());
+                    //put string array into the TextBox
+                    if (logToTextToolStripMenuItem.Checked) SendToTextBox(newText.ToArray());
 
-                //save string array to TXT if needed
-                if (autosaveTXTToolStripMenuItem1.Checked)
-                {
-                    try
+                    //save string array to TXT if needed
+                    if (autosaveTXTToolStripMenuItem1.Checked)
                     {
-                        foreach (string s in newText)
+                        try
                         {
-                            File.AppendAllText(TxtNameTxtToolStripMenuItem1.Text, s, Encoding.GetEncoding(RS232_monitor2.Properties.Settings.Default.CodePage));
+                            foreach (string s in newText)
+                            {
+                                File.AppendAllText(TxtNameTxtToolStripMenuItem1.Text, s, Encoding.GetEncoding(RS232_monitor2.Properties.Settings.Default.CodePage));
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("\r\nError writing file " + TxtNameTxtToolStripMenuItem1.Text + ": " + ex.Message);
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("\r\nError writing file " + TxtNameTxtToolStripMenuItem1.Text + ": " + ex.Message);
-                    }
                 }
+                tmp.RemoveAt(0);
             }
             aTimer.Enabled = true;
         }
@@ -2125,6 +2152,7 @@ namespace RS232_monitor
             });
         }
 
+        //!!! Transfer all values to textboxs
         private void LoadSettings()
         {
             textBox_command.Text = RS232_monitor2.Properties.Settings.Default.DefaultCommand;
@@ -2151,17 +2179,31 @@ namespace RS232_monitor
             logToGridToolStripMenuItem.Checked = RS232_monitor2.Properties.Settings.Default.LogGrid;
             autoscrollToolStripMenuItem.Checked = RS232_monitor2.Properties.Settings.Default.AutoScroll;
             lineWrapToolStripMenuItem.Checked = RS232_monitor2.Properties.Settings.Default.LineWrap;
+
             autosaveTXTToolStripMenuItem1.Checked = RS232_monitor2.Properties.Settings.Default.AutoLogTXT;
             TxtNameTxtToolStripMenuItem1.Text = RS232_monitor2.Properties.Settings.Default.TXTlogFile;
-            CsvNameTxtToolStripMenuItem1.Text = RS232_monitor2.Properties.Settings.Default.CSVlogFile;
+
             autosaveCSVToolStripMenuItem1.Checked = RS232_monitor2.Properties.Settings.Default.AutoLogCSV;
+            CsvNameTxtToolStripMenuItem1.Text = RS232_monitor2.Properties.Settings.Default.CSVlogFile;
+
             LineBreakToolStripTextBox1.Text = RS232_monitor2.Properties.Settings.Default.LineBreakTimeout.ToString();
-            LineBreakTimeout = RS232_monitor2.Properties.Settings.Default.LineBreakTimeout;
+            TxtNameTxtToolStripMenuItem1.Enabled = autosaveTXTToolStripMenuItem1.Checked;
+
             CSVLineNumberLimit = RS232_monitor2.Properties.Settings.Default.CSVMaxLineNumber;
             toolStripTextBox_CSVLinesNumber.Text = CSVLineNumberLimit.ToString();
+
+            LineBreakTimeout = RS232_monitor2.Properties.Settings.Default.LineBreakTimeout;
+            LineBreakToolStripTextBox1.Text = LineBreakTimeout.ToString();
+
             LogLinesLimit = RS232_monitor2.Properties.Settings.Default.LogLinesLimit;
+            LogLinesToolStripTextBox1.Text = LogLinesLimit.ToString();
+
             LineLengthLimit = RS232_monitor2.Properties.Settings.Default.LineLengthLimit;
-            TxtNameTxtToolStripMenuItem1.Enabled = autosaveTXTToolStripMenuItem1.Checked;
+            LineLengthToolStripTextBox1.Text = LineLengthLimit.ToString();
+
+            GUIRefreshPeriod = RS232_monitor2.Properties.Settings.Default.GUIRefreshPeriod;
+            GuiRefreshToolStripTextBox1.Text = GUIRefreshPeriod.ToString();
+
         }
 
         private void SaveSettings()
@@ -2198,6 +2240,7 @@ namespace RS232_monitor
             RS232_monitor2.Properties.Settings.Default.LineBreakTimeout = LineBreakTimeout / 10000;
             RS232_monitor2.Properties.Settings.Default.CSVMaxLineNumber = CSVLineNumberLimit;
             RS232_monitor2.Properties.Settings.Default.LineLengthLimit = LineLengthLimit;
+            RS232_monitor2.Properties.Settings.Default.GUIRefreshPeriod = GUIRefreshPeriod;
             RS232_monitor2.Properties.Settings.Default.Save();
         }
 
