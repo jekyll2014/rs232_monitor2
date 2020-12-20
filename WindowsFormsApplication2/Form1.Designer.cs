@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Data;
-using System.IO;
-using System.IO.Ports;
-using System.Text;
+﻿using System.IO.Ports;
 using System.Windows.Forms;
-namespace RS232_monitor
+
+namespace RS232_monitor2
 {
     partial class FormMain
     {
@@ -1165,7 +1161,7 @@ namespace RS232_monitor
             // 
             this.toolStripMenuItem_onlyData.Name = "toolStripMenuItem_onlyData";
             this.toolStripMenuItem_onlyData.Size = new System.Drawing.Size(200, 22);
-            this.toolStripMenuItem_onlyData.Text = "Don\'t log signals";
+            this.toolStripMenuItem_onlyData.Text = "Don\'loggerThread log signals";
             this.toolStripMenuItem_onlyData.Click += new System.EventHandler(this.ToolStripMenuItem_onlyData_Click);
             // 
             // autoscrollToolStripMenuItem

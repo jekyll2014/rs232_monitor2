@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RS232_monitor
+namespace RS232_monitor2
 {
     internal class Logger
     {
-        private readonly object threadLock;
+        private readonly object o_threadLock;
 
         public enum DirectionType
         {
@@ -17,14 +17,7 @@ namespace RS232_monitor
             Error
         }
 
-        public string[] DirectionMark = new string[]
-        {
-            "<<",
-            ">>",
-            "<!",
-            ">!",
-            "!!",
-        };
+        public string[] DirectionMark;
 
         public struct LogRecord
         {
@@ -36,29 +29,30 @@ namespace RS232_monitor
             public bool mark;
         }
 
-        internal List<LogRecord> messageBase = new List<LogRecord>();
+        private List<LogRecord> messageBase;
 
         public Logger()
         {
-            threadLock = new object();
-            DirectionMark = new string[]
-        {
-            "<<",
-            ">>",
-            "<!",
-            ">!",
-            "!!",
-        };
-            lock (threadLock)
+            o_threadLock = new object();
+            DirectionMark = new[]
+            {
+                "<<",
+                ">>",
+                "<!",
+                ">!",
+                "!!"
+            };
+            lock (o_threadLock)
             {
                 messageBase = new List<LogRecord>();
             }
         }
 
-        public void Add(string _portName, DirectionType _direction, DateTime _time, byte[] _byteArray, string _signalPin, bool _mark)
+        public void Add(string _portName, DirectionType _direction, DateTime _time, byte[] _byteArray,
+            string _signalPin, bool _mark)
         {
             if (_byteArray == null) _byteArray = new byte[0];
-            LogRecord tmp = new LogRecord
+            var tmp = new LogRecord
             {
                 dateTime = _time,
                 portName = _portName,
@@ -67,7 +61,7 @@ namespace RS232_monitor
                 signalPin = _signalPin,
                 mark = _mark
             };
-            lock (threadLock)
+            lock (o_threadLock)
             {
                 messageBase.Add(tmp);
             }
@@ -75,7 +69,7 @@ namespace RS232_monitor
 
         public void Clear()
         {
-            lock (threadLock)
+            lock (o_threadLock)
             {
                 messageBase = new List<LogRecord>();
             }
@@ -83,7 +77,7 @@ namespace RS232_monitor
 
         public int QueueSize()
         {
-            lock (threadLock)
+            lock (o_threadLock)
             {
                 return messageBase.Count();
             }
@@ -91,9 +85,9 @@ namespace RS232_monitor
 
         public List<LogRecord> GetLog()
         {
-            lock (threadLock)
+            lock (o_threadLock)
             {
-                List<LogRecord> tmp = messageBase.ToList();
+                var tmp = messageBase.ToList();
                 messageBase.Clear();
                 return tmp;
             }
@@ -101,7 +95,7 @@ namespace RS232_monitor
 
         public LogRecord GetQueueElement(int n)
         {
-            lock (threadLock)
+            lock (o_threadLock)
             {
                 return messageBase.ElementAt(n);
             }
