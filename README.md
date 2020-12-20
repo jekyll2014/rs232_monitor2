@@ -1,4 +1,6 @@
 # rs232_monitor2
+Faster refactored version.
+
 Collect COM ports (up to 4) data into 1 readable file for analyzing
 
 Software intended for support engineers who needs to collect several data flows into a timed database to analyse the process flow.
